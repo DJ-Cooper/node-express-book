@@ -1,0 +1,23 @@
+{
+  "name": "node-express-book",
+  "version": "1.0.0",
+  "description": "project for book exercises",
+  "main": "node-express-book.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DJ-Cooper/node-express-book.git"
+  },
+  "author": "ADW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DJ-Cooper/node-express-book/issues"
+  },
+  "homepage": "https://github.com/DJ-Cooper/node-express-book#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.4"
+  }
+}
