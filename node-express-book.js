@@ -7,12 +7,25 @@ app.set('view engine', 'handlebars')
 
 app.set('port', process.env.PORT || 3000)
 
+let fortunes = [
+    'Immanentize the Eschaton',
+    'To be played at the Maximum Volume',
+    'Two men enter, one man leave',
+    'Lattice of Coincidence',
+    'We speak in images, not antiquated verbosity',
+]
+
+app.use(express.static(__dirname + '/public'))
+
 app.get('/', function (req, res) {
     res.render('home')
 })
 
 app.get('/about', function (req, res) {
-    res.render('about')
+    let fortuneIndex = Math.floor(Math.random() * fortunes.length)
+    console.log('fortuneIndex:', fortuneIndex)
+    let randomFortune = fortunes[fortuneIndex]
+    res.render('about', { fortune: randomFortune })
 })
 
 // custom 404 page
