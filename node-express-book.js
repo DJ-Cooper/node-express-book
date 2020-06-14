@@ -17,15 +17,21 @@ let fortunes = [
 
 app.use(express.static(__dirname + '/public'))
 
+app.use(function (req, res, next) {
+    res.locals.showTests =
+        app.get('env') !== 'production' && req.query.test === '1'
+    next()
+})
+
 app.get('/', function (req, res) {
     res.render('home')
 })
 
 app.get('/about', function (req, res) {
-    let fortuneIndex = Math.floor(Math.random() * fortunes.length)
-    console.log('fortuneIndex:', fortuneIndex)
-    let randomFortune = fortunes[fortuneIndex]
-    res.render('about', { fortune: randomFortune })
+    res.render('about', {
+        fortune: fortunes[Math.floor(Math.random() * fortunes.length)],
+        pageTestScript: '/qa/tests-about.js',
+    })
 })
 
 // custom 404 page
