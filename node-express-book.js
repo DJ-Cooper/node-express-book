@@ -7,13 +7,7 @@ app.set('view engine', 'handlebars')
 
 app.set('port', process.env.PORT || 3000)
 
-let fortunes = [
-    'Immanentize the Eschaton',
-    'To be played at the Maximum Volume',
-    'Two men enter, one man leave',
-    'Lattice of Coincidence',
-    'We speak in images, not antiquated verbosity',
-]
+let zombo = require('./lib/fortune.js')
 
 app.use(express.static(__dirname + '/public'))
 
@@ -23,15 +17,25 @@ app.use(function (req, res, next) {
     next()
 })
 
+// ROUTES
+
 app.get('/', function (req, res) {
     res.render('home')
 })
 
 app.get('/about', function (req, res) {
     res.render('about', {
-        fortune: fortunes[Math.floor(Math.random() * fortunes.length)],
+        fortune: zombo.getFortune(),
         pageTestScript: '/qa/tests-about.js',
     })
+})
+
+app.get('/tours/hood-river', function (req, res) {
+    res.render('tours/hood-river')
+})
+
+app.get('/tours/request-group-rate', function (req, res) {
+    res.render('tours/request-group-rate')
 })
 
 // custom 404 page
