@@ -1,5 +1,8 @@
 {
     "rules": {
         "eqeqeq": ["error", "always"]
+    },
+    "env": {
+        "amd": true
     }
 }
