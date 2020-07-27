@@ -1,5 +1,6 @@
 let express = require('express');
 let app = express();
+var formidable = require('formidable');
 
 let handlebars = require('express-handlebars').create({
     defaultLayout: 'main',
@@ -30,6 +31,8 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(require('body-parser').urlencoded({ extended: true }));
+
 // ROUTES
 
 app.get('/', function (req, res) {
@@ -49,6 +52,47 @@ app.get('/tours/hood-river', function (req, res) {
 
 app.get('/tours/request-group-rate', function (req, res) {
     res.render('tours/request-group-rate');
+});
+
+app.get('/newsletter', function (req, res) {
+    res.render('newsletter', { csrf: 'CSRF token goes here' });
+});
+
+app.get('/contest/vacation-photo', function (req, res) {
+    var now = new Date();
+    res.render('contest/vacation-photo', {
+        year: now.getFullYear(),
+        month: now.getMonth(),
+    });
+});
+
+app.post('/contest/vacation-photo/:year/:month', function (req, res) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+        if (err) return res.redirect(303, '/error');
+        console.log('received fields:');
+        console.log(fields);
+        console.log('received files:');
+        console.log(files);
+        res.redirect(303, '/thank-you');
+    });
+});
+
+app.post('/process', function (req, res) {
+    // console.log('Form (from querystring: ' + req.query.form);
+    // console.log('CSRF token (from hidden form field' + req.body._csrf);
+    // console.log('Name (from visible form field)' + req.body.name);
+    // console.log('Email from visible form field' + req.body.email);
+
+    if (req.xhr || req.accepts('json,html') === 'json') {
+        // if there were an error, we would send {error: 'description'}
+        res.send({ success: true });
+    } else {
+        // if there were an error, we would redirect to error page
+        res.redirect(303, '/thank-you');
+    }
+
+    // res.redirect(303, '/thank-you');
 });
 
 app.get('/nursery-rhyme', function (req, res) {
