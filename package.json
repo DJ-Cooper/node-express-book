@@ -28,6 +28,6 @@
     "grunt-cafe-mocha": "^0.1.13",
     "grunt-exec": "^3.0.0",
     "gruntify-eslint": "^5.0.0",
-    "mocha": "^8.0.1"
+    "mocha": "^8.4.0"
   }
 }
